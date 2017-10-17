@@ -8,7 +8,7 @@ namespace JsonApiSerializer.Util
 {
      public static class TypeInfoShim
     {
-        public static IEnumerable<Type> GetInterfaces(TypeInfo info)
+        public static IEnumerable<Type> GetInterfaces(Type info)
         {
 #if NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD1_4
             foreach (var i in info.ImplementedInterfaces)
@@ -27,7 +27,7 @@ namespace JsonApiSerializer.Util
 #endif
         }
 
-        public static PropertyInfo GetProperty(TypeInfo info, string property)
+        public static PropertyInfo GetProperty(Type info, string property)
         {
 #if NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD1_4
             return info.AsType().GetRuntimeProperties().FirstOrDefault(x => x.Name.Equals(property, StringComparison.OrdinalIgnoreCase));
@@ -36,12 +36,12 @@ namespace JsonApiSerializer.Util
 #endif
         }
 
-        public static PropertyInfo GetPropertyFromInhertianceChain(TypeInfo info, string property)
+        public static PropertyInfo GetPropertyFromInhertianceChain(Type info, string property)
         {
             var propInfo = GetProperty(info, property);
             if (propInfo == null && info.IsInterface)
                 propInfo = GetInterfaces(info)
-                    .Select(t => GetProperty(t.GetTypeInfo(), property))
+                    .Select(t => GetProperty(t, property))
                     .FirstOrDefault(p => p != null);
 
             return propInfo;

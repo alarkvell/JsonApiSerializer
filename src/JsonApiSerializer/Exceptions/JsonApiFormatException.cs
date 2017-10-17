@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JsonApiSerializer;
 
 namespace JsonApiSerializer.Exceptions
 {
@@ -28,8 +29,8 @@ namespace JsonApiSerializer.Exceptions
         private static string ConcatSentence(params string[] sentences)
         {
             return string.Join(". ", sentences
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Select(x => FirstLetterToUpper(x.Trim('.', ' '))));
+                .Where(x => !x.IsNullOrWhiteSpace())
+                .Select(x => FirstLetterToUpper(x.Trim('.', ' '))).ToArray());
         }
 
         private static string FirstLetterToUpper(string str)

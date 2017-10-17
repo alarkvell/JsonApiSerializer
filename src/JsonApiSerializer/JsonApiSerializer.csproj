@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard1.5;net45</TargetFrameworks>
+    <TargetFramework>net35</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>0.9.18</Version>
     <Authors>Alex Davies</Authors>

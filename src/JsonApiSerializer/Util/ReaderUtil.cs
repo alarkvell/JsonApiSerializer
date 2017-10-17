@@ -210,7 +210,7 @@ namespace JsonApiSerializer.Util
         /// <param name="path"></param>
         public static void ReadUntilEnd(JsonReader reader, string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
+            if (path.IsNullOrWhiteSpace())
                 return;
 
             do

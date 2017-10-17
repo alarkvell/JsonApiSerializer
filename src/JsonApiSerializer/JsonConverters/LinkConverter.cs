@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace JsonApiSerializer.JsonConverters
 {
@@ -16,7 +15,7 @@ namespace JsonApiSerializer.JsonConverters
     {
         public static bool CanConvertStatic(Type objectType)
         {
-            return typeof(ILink).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(ILink).IsAssignableFrom(objectType);
         }
 
         public override bool CanConvert(Type objectType)

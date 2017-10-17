@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace JsonApiSerializer.JsonConverters
 {
@@ -19,8 +18,7 @@ namespace JsonApiSerializer.JsonConverters
     {
         public static bool CanConvertStatic(Type objectType)
         {
-            return TypeInfoShim.GetInterfaces(objectType.GetTypeInfo())
-                .Select(x=>x.GetTypeInfo())
+            return TypeInfoShim.GetInterfaces(objectType)
                 .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDocumentRoot<>));
         }
 
@@ -45,12 +43,11 @@ namespace JsonApiSerializer.JsonConverters
                 {
                     case PropertyNames.Data:
 
-                        var documentRootInterfaceType = TypeInfoShim.GetInterfaces(objectType.GetTypeInfo())
-                            .Select(x => x.GetTypeInfo())
+                        var documentRootInterfaceType = TypeInfoShim.GetInterfaces(objectType)
                             .FirstOrDefault(x =>
                                 x.IsGenericType
                                 && x.GetGenericTypeDefinition() == typeof(IDocumentRoot<>));
-                        var dataType = documentRootInterfaceType.GenericTypeArguments[0];
+                        var dataType = documentRootInterfaceType.GenericTypeArguments()[0];
 
                         var dataObj = serializer.Deserialize(reader, dataType);
                         contract.Properties.GetClosestMatchProperty(PropertyNames.Data).ValueProvider.SetValue(rootObject, dataObj);

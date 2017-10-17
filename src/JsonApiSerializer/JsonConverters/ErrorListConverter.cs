@@ -26,7 +26,7 @@ namespace JsonApiSerializer.JsonConverters
             IEnumerable<IError> errors;
             if (DocumentRootConverter.TryResolveAsRootError(reader, objectType, serializer, out errors))
             {
-                return ListUtil.CreateList(objectType, errors);
+                return ListUtil.CreateList(objectType, errors.Cast<object>());
             }
 
             Type elementType;
